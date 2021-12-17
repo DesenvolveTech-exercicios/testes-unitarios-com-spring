@@ -79,6 +79,23 @@ class StudentControllerTest {
     }
 
     @Test
+    void shouldRetrieveCoursesByStudent() throws Exception {
+        Mockito.when(studentService.retrieveCourses(Mockito.anyString()))
+                .thenReturn(mockStudent.getCourses());
+
+        RequestBuilder request = MockMvcRequestBuilders.get("/students/Student1/courses")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(request).andReturn();
+
+        String expected = "[{\"id\":\"Course1\",\"name\":\"Spring\",\"description\":\"10 Steps\",\"steps\":[\"Learn Maven\",\"Import Project\",\"First Example\",\"Second Example\"]}]";
+
+        JSONAssert.assertEquals(expected,
+                result.getResponse().getContentAsString(), true);
+
+    }
+
+    @Test
     void shouldRetrieveDetailsForCourse() throws Exception {
 
         Mockito.when(
