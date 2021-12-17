@@ -34,7 +34,7 @@ class StudentControllerTest {
     @MockBean
     private StudentService studentService;
 
-    private List<Student> mockStudents = new ArrayList<>();
+    private final List<Student> mockStudents = new ArrayList<>();
 
     Course mockCourse = new Course("Course1", "Spring", "10 Steps",
             Arrays.asList("Learn Maven", "Import Project", "First Example",
@@ -75,12 +75,12 @@ class StudentControllerTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
         System.out.println(result.getResponse());
-        String expected = "{id:sem_nome,name:Spring,description:10 Steps}";
+        String expected = "{\"id\":\"Course1\",\"name\":\"Spring\",\"description\":\"10 Steps\",\"steps\":[\"Learn Maven\",\"Import Project\",\"First Example\",\"Second Example\"]}";
 
         // {"id":"Course1","name":"Spring","description":"10 Steps, 25 Examples and 10K Students","steps":["Learn Maven","Import Project","First Example","Second Example"]}
 
         JSONAssert.assertEquals(expected, result.getResponse()
-                .getContentAsString(), false);
+                .getContentAsString(), true);
     }
 
     @Test
