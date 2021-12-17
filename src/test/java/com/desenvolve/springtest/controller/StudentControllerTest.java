@@ -55,10 +55,27 @@ class StudentControllerTest {
 
         MvcResult result = mockMvc.perform(request).andReturn();
 
-        String expected = "[{\"id\":\"Student1\",\"name\":\"Paolo\",\"description\":\"programador\",\"courses\":" +
-                "[{\"id\":\"Course1\",\"name\":\"Spring\",\"description\":\"10 Steps\",\"steps\":[\"Learn Maven\",\"Import Project\",\"First Example\",\"Second Example\"]}]}]";
+        String expected = "[{\"id\":\"Student1\",\"name\":\"Paolo\",\"description\":\"programador\",\"courses\":[{\"id\":\"Course1\",\"name\":\"Spring\",\"description\":\"10 Steps\",\"steps\":[\"Learn Maven\",\"Import Project\",\"First Example\",\"Second Example\"]}]}]";
 
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);
+    }
+
+    @Test
+    void shouldRetrieveStudentById() throws Exception {
+        mockStudents.add(mockStudent);
+        Mockito.when(studentService.retrieveStudent(Mockito.anyString()))
+                .thenReturn(mockStudents.get(0));
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/students/Student1")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(request).andReturn();
+
+        String expected = "{\"id\":\"Student1\",\"name\":\"Paolo\",\"description\":\"programador\",\"courses\":[{\"id\":\"Course1\",\"name\":\"Spring\",\"description\":\"10 Steps\",\"steps\":[\"Learn Maven\",\"Import Project\",\"First Example\",\"Second Example\"]}]}";
+
+        JSONAssert.assertEquals(expected,
+                result.getResponse().getContentAsString(), true);
     }
 
     @Test
