@@ -21,8 +21,8 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.junit.jupiter.api.Assertions.*;
 
-@WebMvcTest(value = StudentController.class)
-public class StudentControllerTest {
+@WebMvcTest(value = StudentCourseController.class)
+public class StudentCourseControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
