@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import com.desenvolve.springtest.model.Course;
+import com.desenvolve.springtest.model.Student;
 import com.desenvolve.springtest.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-public class StudentCourseController {
+public class StudentController {
 
     @Autowired
     private StudentService studentService;
+
+    @GetMapping("/students")
+    public List<Student> retrieveStudents(){
+        return studentService.retrieveAllStudents();
+    }
 
     @GetMapping("/students/{studentId}/courses")
     public List<Course> retrieveCoursesForStudent(@PathVariable String studentId) {
